@@ -1,4 +1,4 @@
-import { type ResourceProvider } from '../data';
+import { type ResourceProvider } from '@rck.princy/ra-data-provider-wrapper';
 
 export type Person = {
   id: string;
