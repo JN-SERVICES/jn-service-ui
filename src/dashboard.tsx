@@ -17,7 +17,7 @@ import {
   TopToolbar,
 } from 'react-admin';
 import { v4 as uuid } from 'uuid';
-import { raDataProvider } from './providers';
+import { authProvider, raDataProvider } from './providers';
 
 export const CreatePerson = () => {
   return (
@@ -77,11 +77,12 @@ export const PersonShow = () => (
   </Show>
 );
 
-export const App = () => {
+export const Dashboard = () => {
   return (
     <Admin
-      title="ra-data-provider-wrapper-examples"
+      authProvider={authProvider}
       dataProvider={raDataProvider}
+      title="ra-data-provider-wrapper-examples"
     >
       <Resource
         name="persons"
