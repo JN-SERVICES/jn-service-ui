@@ -17,7 +17,8 @@ import {
   TopToolbar,
 } from 'react-admin';
 import { v4 as uuid } from 'uuid';
-import { authProvider, raDataProvider } from './providers';
+import authProvider from './providers/auth-provider';
+import { raDataProvider } from './providers';
 
 export const CreatePerson = () => {
   return (
