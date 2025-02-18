@@ -1,55 +1,30 @@
 import { AuthProvider } from 'react-admin';
+import { isAxiosError } from 'axios';
 import {
-  auth,
-  provider,
-  signInWithPopup,
-  signOut,
-} from '../conf/firebase-conf';
-import { User } from 'firebase/auth';
+  firebaseAuthProvider,
+  SigninProviderType,
+  USER_TOKEN_ID_CACHE_NAME,
+} from './firebase-auth-provider';
 
-const authProvider: AuthProvider = {
-  login: async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user: User = result.user;
-      localStorage.setItem('firebase_token', await user.getIdToken());
-      localStorage.setItem('user', JSON.stringify(user));
-      return Promise.resolve();
-    } catch (error) {
-      return Promise.reject(error);
-    }
+export const authProvider: AuthProvider = {
+  login: async (data: SigninProviderType) => {
+    return firebaseAuthProvider.signIn(data);
   },
-
   logout: () => {
-    return signOut(auth)
-      .then(() => {
-        localStorage.removeItem('firebase_token');
-        localStorage.removeItem('user');
-        return Promise.resolve();
-      })
-      .catch((error) => Promise.reject(error));
+    return firebaseAuthProvider.signOut();
   },
-
-  checkAuth: () => {
-    return localStorage.getItem('firebase_token')
+  checkAuth: async () => {
+    //TODO
+    return localStorage.getItem(USER_TOKEN_ID_CACHE_NAME)
       ? Promise.resolve()
       : Promise.reject();
   },
-
   checkError: (error) => {
-    console.error(error);
-    return Promise.reject();
+    if (isAxiosError(error) && error?.response?.status === 403) {
+      return Promise.reject();
+    }
+    return Promise.resolve();
   },
-
   getPermissions: () => Promise.resolve(),
-  getIdentity: () => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return Promise.resolve({
-      id: user.uid,
-      fullName: user.displayName,
-      avatar: user.photoURL,
-    });
-  },
+  // getIdentity: () => Promise.resolve(),
 };
-
-export default authProvider;

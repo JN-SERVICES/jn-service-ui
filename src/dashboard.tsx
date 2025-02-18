@@ -7,7 +7,6 @@ import {
   EditButton,
   List,
   ListGuesser,
-  required,
   Resource,
   Show,
   SimpleForm,
@@ -15,10 +14,12 @@ import {
   TextField,
   TextInput,
   TopToolbar,
+  required,
 } from 'react-admin';
 import { v4 as uuid } from 'uuid';
-import authProvider from './providers/auth-provider';
-import { raDataProvider } from './providers';
+
+import { LoginPage } from './security/components';
+import { raDataProvider, authProvider } from './providers';
 
 export const CreatePerson = () => {
   return (
@@ -81,9 +82,10 @@ export const PersonShow = () => (
 export const Dashboard = () => {
   return (
     <Admin
+      title="jn-services"
       authProvider={authProvider}
       dataProvider={raDataProvider}
-      title="ra-data-provider-wrapper-examples"
+      loginPage={LoginPage}
     >
       <Resource
         name="persons"

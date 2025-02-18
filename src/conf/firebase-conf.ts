@@ -1,12 +1,7 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-} from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
-const FIREBASE_CONFIG: FirebaseOptions = {
+export const FIREBASE_CONFIG: FirebaseOptions = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: process.env.FIREBASE_PROJECT_ID,
@@ -16,10 +11,7 @@ const FIREBASE_CONFIG: FirebaseOptions = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-export default FIREBASE_CONFIG;
+export const FIREBASE_APP = initializeApp(FIREBASE_CONFIG);
 
-const firebaseApp = initializeApp(FIREBASE_CONFIG);
-const auth = getAuth(firebaseApp);
-const provider = new GoogleAuthProvider();
-
-export { auth, provider, signInWithPopup, signOut };
+/* firebaseAuth module */
+export const FIREBASE_AUTH_MODULE = getAuth(FIREBASE_APP);

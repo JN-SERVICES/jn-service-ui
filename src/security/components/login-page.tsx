@@ -1,24 +1,14 @@
 import { Button, Card, CardContent, Typography } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../conf/firebase-conf';
-import { useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { useLogin } from 'react-admin';
 
-const LoginPage = () => {
-  const navigate = useNavigate();
+import GoogleIcon from '@mui/icons-material/Google';
+
+export const LoginPage = () => {
+  const login = useLogin();
 
   const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      localStorage.setItem('firebase_token', await user.getIdToken());
-      localStorage.setItem('user', JSON.stringify(user));
-
-      navigate('/');
-    } catch (error) {
-      console.error('Erreur de connexion :', error);
-    }
+    login(GoogleAuthProvider);
   };
 
   return (
@@ -37,5 +27,3 @@ const LoginPage = () => {
     </Card>
   );
 };
-
-export default LoginPage;
