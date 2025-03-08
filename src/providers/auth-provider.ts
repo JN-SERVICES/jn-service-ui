@@ -1,10 +1,10 @@
 import { AuthProvider } from 'react-admin';
 import { isAxiosError } from 'axios';
 import {
-  firebaseAuthProvider,
   SigninProviderType,
-  USER_TOKEN_ID_CACHE_NAME,
+  firebaseAuthProvider,
 } from './firebase-auth-provider';
+import { cacheProvider } from './cache-provider';
 
 export const authProvider: AuthProvider = {
   login: async (data: SigninProviderType) => {
@@ -15,7 +15,7 @@ export const authProvider: AuthProvider = {
   },
   checkAuth: async () => {
     //TODO
-    return localStorage.getItem(USER_TOKEN_ID_CACHE_NAME)
+    return cacheProvider.firebaseAuth.isPresent()
       ? Promise.resolve()
       : Promise.reject();
   },
