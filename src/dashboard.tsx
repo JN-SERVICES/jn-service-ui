@@ -1,6 +1,7 @@
 import {
   Admin,
   Create,
+  CustomRoutes,
   Datagrid,
   DeleteButton,
   Edit,
@@ -16,10 +17,13 @@ import {
   TopToolbar,
   required,
 } from 'react-admin';
+import { Route } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { LoginPage } from './security/components';
 import { raDataProvider, authProvider } from './providers';
+import { HomePage } from './operations/home';
+import { CompleteInfosPages } from './operations/complete-infos';
 
 export const CreatePerson = () => {
   return (
@@ -83,9 +87,10 @@ export const Dashboard = () => {
   return (
     <Admin
       title="jn-services"
+      dashboard={HomePage}
+      loginPage={LoginPage}
       authProvider={authProvider}
       dataProvider={raDataProvider}
-      loginPage={LoginPage}
     >
       <Resource
         name="persons"
@@ -95,6 +100,10 @@ export const Dashboard = () => {
         show={<PersonShow />}
       />
       <Resource name="error" list={<ListGuesser />} />
+      <CustomRoutes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/complete-infos" element={<CompleteInfosPages />} />
+      </CustomRoutes>
     </Admin>
   );
 };

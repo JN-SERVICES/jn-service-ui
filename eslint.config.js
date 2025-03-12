@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'src/data'], // Ignorer le répertoire 'src/data'
+    ignores: ['dist', 'src/gen/jfds-api-client'],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
