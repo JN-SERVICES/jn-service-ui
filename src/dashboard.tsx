@@ -6,7 +6,6 @@ import {
   Edit,
   EditButton,
   List,
-  ListGuesser,
   Resource,
   Show,
   SimpleForm,
@@ -20,6 +19,8 @@ import { v4 as uuid } from 'uuid';
 
 import { LoginPage } from './security/components';
 import { raDataProvider, authProvider } from './providers';
+import { Jnlayout } from './layout/jnlayout';
+import { mainTheme } from './jnthemes';
 
 export const CreatePerson = () => {
   return (
@@ -82,19 +83,21 @@ export const PersonShow = () => (
 export const Dashboard = () => {
   return (
     <Admin
+      layout={Jnlayout}
       title="jn-services"
       authProvider={authProvider}
       dataProvider={raDataProvider}
       loginPage={LoginPage}
+      theme={mainTheme}
     >
       <Resource
         name="persons"
+        options={{ label: 'Utilisateurs' }}
         list={<PersonList />}
         create={<CreatePerson />}
         edit={<EditPerson />}
         show={<PersonShow />}
       />
-      <Resource name="error" list={<ListGuesser />} />
     </Admin>
   );
 };
